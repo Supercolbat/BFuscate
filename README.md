@@ -1,0 +1,1 @@
+usage: python bfuscate.py
