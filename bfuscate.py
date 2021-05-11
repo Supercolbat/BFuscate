@@ -18,34 +18,34 @@ g_output = parser.add_argument_group("output")
 g_configuration.add_argument(
     "-m", "--method",
     choices=["tuple", "lambda"], default="lambda",
-    help="Output destination."
+    help="method of obfuscation"
 )
 g_configuration.add_argument(
     "--defend",
     action="store_true",
-    help="Implements self-defending protection."
+    help="self-defends the code (WIP)"
 )
 g_configuration.add_argument(
     "--rename-vars",
     choices=["I", "O", "hex", "random"],
-    help="Output destination."
+    help="obfuscates variable names (WIP)"
 )
 
 g_flags.add_argument(
     "-v", "--verbose",
     action="store_true",
-    help="Output destination."
+    help="outputs verbose information (WIP)"
 )
 
 parser.add_argument(
     "file",
     type=str,
-    help="Target file for obfuscation."
+    help="target file for obfuscation"
 )
 g_output.add_argument(
     "-o", "--output",
     type=str,
-    help="Output destination."
+    help="output destination"
 )
 
 args = parser.parse_args()
