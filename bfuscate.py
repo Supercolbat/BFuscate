@@ -3,21 +3,32 @@ A simple python obfuscator.
 usage: python bfuscate.py -h
 """
 
+import os
 import sys
 import argparse
 import time
-import python_minifier
+
 import functions
+
+try:
+    import python_minifier
+except ModuleNotFoundError as e:
+    os.system("python -m pip install python_minifier")
+    print("[✔] Successfully installed required modules. Try running BFuscate again.")
+    sys.exit(1)
+
 
 # Parse arguments
 parser = argparse.ArgumentParser()
+g_other = parser.add_argument_group("other")
 g_configuration = parser.add_argument_group("configuration")
 g_flags = parser.add_argument_group("flags")
 g_output = parser.add_argument_group("output")
 
+
 g_configuration.add_argument(
     "-m", "--method",
-    choices=["tuple", "lambda"], default="lambda",
+    choices=["len", "lambda"], default="lambda",
     help="method of obfuscation"
 )
 g_configuration.add_argument(

@@ -1,10 +1,12 @@
 """
 Obfuscation functions for BFuscate
+By @JoeyLent on repl.it
 """
 
 import string
 import random
 import utils
+
 
 # Define the types
 TYPES = {
@@ -111,15 +113,15 @@ HEADERS = {
 # Generate a dict of existing characters within
 # the types and their matches
 matches = {}
-for c in string.printable:
+for letter in string.printable:
     characters = []
 
-    for t in TYPES.values():
-        if c in t["type"]:
-            characters.append(t)
+    for element in TYPES.values():
+        if letter in element["type"]:
+            characters.append(element)
 
     if characters:
-        matches[c] = characters
+        matches[letter] = characters
 
 
 def lambda_bfuscate(code, args) -> str:
@@ -128,8 +130,8 @@ def lambda_bfuscate(code, args) -> str:
     """
 
     obfuscated = HEADERS[args.defend]
-
     segments = []
+
 
     for char in code:
 
@@ -179,8 +181,8 @@ def len_bfuscate(code, args) -> str:
     """
 
     obfuscated = HEADERS[args.defend]
-
     segments = []
+
 
     for char in code:
 
