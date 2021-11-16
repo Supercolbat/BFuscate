@@ -1,1 +1,1 @@
-usage: python bfuscate.py
+usage: python bfuscate.py -h

@@ -8,14 +8,14 @@ import sys
 import argparse
 import time
 
-import functions
+import methods
 
 try:
     import python_minifier
 except ModuleNotFoundError as e:
     os.system("python -m pip install python_minifier")
     print("[✔] Successfully installed required modules. Try running BFuscate again.")
-    sys.exit(1)
+    sys.exit()
 
 
 # Parse arguments
@@ -72,9 +72,9 @@ if __name__ == "__main__":
         minified = python_minifier.minify(code)
 
     if args.method == "lambda":
-        RESULT = functions.lambda_bfuscate(minified, args)
+        RESULT = methods.lambda_bfuscate(minified, args)
     elif args.method == "len":
-        RESULT = functions.len_bfuscate(minified, args)
+        RESULT = methods.len_bfuscate(minified, args)
     else:
         print(f"[×] Unknown obfuscation method '{args.method}'")
         sys.exit()

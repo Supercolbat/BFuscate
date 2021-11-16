@@ -114,11 +114,7 @@ HEADERS = {
 # the types and their matches
 matches = {}
 for letter in string.printable:
-    characters = []
-
-    for element in TYPES.values():
-        if letter in element["type"]:
-            characters.append(element)
+    characters = [element for element in TYPES.values() if letter in element["type"]]
 
     if characters:
         matches[letter] = characters
@@ -132,47 +128,42 @@ def lambda_bfuscate(code, args) -> str:
     obfuscated = HEADERS[args.defend]
     segments = []
 
-
-    for char in code:
-
-        # Check if char has a match
-        if char in matches:
-            chosen_type = random.choice(matches[char])
-            chosen_index = random.choice(utils.find(char, chosen_type["type"]))
+    for character in code:
+        # Check if character has a match
+        if character in matches:
+            chosen_type = random.choice(matches[character])
+            chosen_index = random.choice(utils.find(character, chosen_type["type"]))
 
             segments.append("str({}.__class__)[{}]".format(
                 chosen_type["get"](),
                 utils.convert(chosen_index)
             ))
 
-        # Check if char is uppercase and has lowercase counterpart
-        elif char.isupper() and char.lower() in matches:
-            chosen_type = random.choice(matches[char.lower()])
-            chosen_index = random.choice(utils.find(char.lower(), chosen_type["type"]))
+        # Check if character is uppercase and has lowercase counterpart
+        elif character.isupper() and character.lower() in matches:
+            chosen_type = random.choice(matches[character.lower()])
+            chosen_index = random.choice(utils.find(character.lower(), chosen_type["type"]))
 
             segments.append("chr(ord(str({}.__class__)[{}])-(((),()).__len__()**((),(),(),(),()).__len__()))".format(
                 chosen_type["get"](),
                 utils.convert(chosen_index)
             ))
 
-        # Check if char is a digit
-        elif char in string.digits:
+        # Check if character is a digit
+        elif character in string.digits:
             segments.append("str({})".format(
-                utils.convert(int(char))
+                utils.convert(int(character))
             ))
 
         # Create character
         else:
             segments.append("chr({})".format(
-                utils.convert(ord(char))
+                utils.convert(ord(character))
             ))
 
     obfuscated += "+".join(segments)
 
-    if args.defend:
-        return utils.encrypt(obfuscated)
-    else:
-        return obfuscated
+    return utils.encrypt(obfuscated) if args.defend else obfuscated
 
 
 def len_bfuscate(code, args) -> str:
@@ -183,13 +174,11 @@ def len_bfuscate(code, args) -> str:
     obfuscated = HEADERS[args.defend]
     segments = []
 
-
-    for char in code:
-
-        # Check if char has a match
-        if char in matches:
-            chosen_type = random.choice(matches[char])
-            chosen_index = random.choice(utils.find(char, chosen_type["type"]))
+    for character in code:
+        # Check if character has a match
+        if character in matches:
+            chosen_type = random.choice(matches[character])
+            chosen_index = random.choice(utils.find(character, chosen_type["type"]))
             split_num = utils.split(chosen_index)
 
             segments.append("str({}.__class__)[{}-{}]".format(
@@ -204,10 +193,10 @@ def len_bfuscate(code, args) -> str:
                 "({}).__len__()".format(",".join(["()"] * split_num[1])) if split_num[1] > 0 else "(()).__len__()"
             ))
 
-        # Check if char is uppercase and has lowercase counterpart
-        elif char.isupper() and char.lower() in matches:
-            chosen_type = random.choice(matches[char.lower()])
-            chosen_index = random.choice(utils.find(char.lower(), chosen_type["type"]))
+        # Check if character is uppercase and has lowercase counterpart
+        elif character.isupper() and character.lower() in matches:
+            chosen_type = random.choice(matches[character.lower()])
+            chosen_index = random.choice(utils.find(character.lower(), chosen_type["type"]))
             split_num = utils.split(chosen_index)
 
             segments.append("chr(ord(str(type({}))[{}-{}])-(((),()).__len__()**((),(),(),(),()).__len__()))".format(
@@ -222,9 +211,9 @@ def len_bfuscate(code, args) -> str:
                 "({}).__len__()".format(",".join(["()"] * split_num[1])) if split_num[1] > 0 else "(()).__len__()"
             ))
 
-        # Check if char is a digit
-        elif char in string.digits:
-            split_num = utils.split(int(char))
+        # Check if character is a digit
+        elif character in string.digits:
+            split_num = utils.split(int(character))
 
             segments.append("str({}-{})".format(
                 "*".join(
@@ -238,7 +227,7 @@ def len_bfuscate(code, args) -> str:
 
         # Create character
         else:
-            split_num = utils.split(ord(char))
+            split_num = utils.split(ord(character))
 
             segments.append("chr({}-{})".format(
                 "*".join(
