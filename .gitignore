@@ -1,4 +1,9 @@
-# directories
+# build directories
+build/
+dist/
+BFuscate.egg-info/
+
+# misc directories
 __pycache__/
 */__pycache__/
 archive/
