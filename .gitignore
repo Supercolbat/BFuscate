@@ -3,11 +3,10 @@ build/
 dist/
 BFuscate.egg-info/
 
-# misc directories
+# python cache
 __pycache__/
 */__pycache__/
-archive/
 
-# files
+# other files
 BRAINSTORMING.md
 .replit

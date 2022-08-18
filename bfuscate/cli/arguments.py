@@ -1,5 +1,6 @@
 import argparse
 
+
 def parse_args():
     # Parse arguments
     parser = argparse.ArgumentParser()
@@ -7,13 +8,7 @@ def parse_args():
     g_configuration = parser.add_argument_group("configuration")
     g_flags = parser.add_argument_group("flags")
     g_output = parser.add_argument_group("output")
-    
-    
-    g_configuration.add_argument(
-        "-m", "--method",
-        choices=["len", "lambda"], default="lambda",
-        help="method of obfuscation"
-    )
+
     """
     g_configuration.add_argument(
         "--defend",
@@ -32,18 +27,10 @@ def parse_args():
         help="outputs verbose information (WIP)"
     )
     """
-    
-    parser.add_argument(
-        "file",
-        type=str,
-        help="target file for obfuscation"
-    )
-    g_output.add_argument(
-        "-o", "--output",
-        type=str,
-        help="output destination"
-    )
-    
+
+    parser.add_argument("file", type=str, help="target file for obfuscation")
+    g_output.add_argument("-o", "--output", type=str, help="output destination")
+
     args = parser.parse_args()
 
     return args
