@@ -1,31 +1,50 @@
 from functools import reduce
 from math import ceil, log
 
+from typing import Dict, Tuple
 
-def encrypt(code) -> str:
+
+def encrypt(code: str) -> str:
+    """
+    WIP feature
+    Encrypts the source with XOR encryption and appends
+    the hash to prevent tampering... or so I thought.
+    """
+
     split_code = code.split("#")
     output = ""
 
     split_code.append(str(code.__hash__()))
 
-    for a, b in zip(split_code[1], split_code[2] * ceil(len(split_code[1]) / len(split_code[2]))):
+    for a, b in zip(
+        split_code[1], split_code[2] * ceil(len(split_code[1]) / len(split_code[2]))
+    ):
         output += hex(ord(a) ^ ord(b))[2:].rjust(2, "0")
 
     return split_code[0] + "#" + output + "#" + split_code[2]
 
 
-def find(substring, string) -> list:
+def find(substring: str, string: str) -> list:
+    """
+    Finds all indexes in which a substring can be
+    found in a string.
+    """
+
     indexes = []
     index = -1
 
-    while (ind := string[index + 1:].find(substring)) != -1 and index < len(string):
+    while (ind := string[index + 1 :].find(substring)) != -1 and index < len(string):
         index = ind + index + 1
         indexes.append(index)
 
     return indexes
 
 
-def split(num) -> tuple:
+def split(num: int) -> Tuple[Dict[int, int], int]:
+    """
+    Splits a number into prime factors
+    """
+
     nums = [num]
     ptr = 0
     offset = 0
@@ -34,8 +53,8 @@ def split(num) -> tuple:
     while ptr < len(nums):
         while not nums[ptr] in [1, 2, 3, 5, 7]:
             if nums[ptr] == last_num:
-                if nums[ptr + 1:]:
-                    offset += reduce(lambda x, y: x * y, nums[ptr + 1:])
+                if nums[ptr + 1 :]:
+                    offset += reduce(lambda x, y: x * y, nums[ptr + 1 :])
                 else:
                     break
 
@@ -61,7 +80,11 @@ def split(num) -> tuple:
 
 
 # Credits to https://benkurtovic.com/2014/06/01/obfuscating-hello-world.html
-def encode(num, depth) -> str:
+def encode(num: int, depth: int) -> str:
+    """
+    Obfuscates a number with lambda-foo
+    """
+
     if num == 0:
         return "(lambda:_).__code__.co_argcount"
 
@@ -73,7 +96,11 @@ def encode(num, depth) -> str:
     return "({})".format(convert(num, depth + 1))
 
 
-def convert(num, depth = 0) -> str:
+def convert(num: int, depth: int = 0) -> str:
+    """
+    Internal function used in bfuscate.utils.encode
+    """
+
     if num == 0:
         return "(lambda:_).__code__.co_argcount"
 
@@ -100,10 +127,7 @@ def convert(num, depth = 0) -> str:
         if shift == 0:
             RESULT += encode(base, depth)
         else:
-            RESULT += "({}<<{})".format(
-                encode(base, depth),
-                encode(shift, depth)
-            )
+            RESULT += "({}<<{})".format(encode(base, depth), encode(shift, depth))
 
         num = diff if num > 0 else -diff
 

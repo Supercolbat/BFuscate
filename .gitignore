@@ -1,2 +1,12 @@
-__pycache__/*
+# build directories
+build/
+dist/
+BFuscate.egg-info/
+
+# python cache
+__pycache__/
+*/__pycache__/
+
+# other files
+BRAINSTORMING.md
 .replit
