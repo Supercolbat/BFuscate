@@ -1,7 +1,12 @@
 <h1 align="center">BFuscate</h1>
 <h3 align="center">A purely <ins>visual</ins> obfuscator for Python</h3>
 
-[![Code style: black](https://img.shields.io/badge/code%20style-black-000000.svg)](https://github.com/psf/black)
+<br>
+
+<p align="center">
+  <a href="https://github.com/psf/black"><img src="https://img.shields.io/badge/code%20style-black-000000.svg" alt="Code style: black"></a>
+  <img src="https://img.shields.io/badge/is%20it%20good%20yet%3F-no-651cdb.svg" alt="is it good yet? no">
+</p>
 
 ## :rotating_light: Disclaimer
 
